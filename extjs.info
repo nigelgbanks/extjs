@@ -1,4 +1,4 @@
-name = Sencha ExtJS Library
+name = ExtJS Library
 description = Provides the Sencha ExtJS plug-in to other Drupal modules.
 package = User interface
 core = 6.x
