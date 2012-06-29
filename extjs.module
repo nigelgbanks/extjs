@@ -1,0 +1,29 @@
+<?php
+
+/**
+ * @file
+ *
+ * A Drupal wrapper for the Sencha ExtJS Library
+ */
+define('EXTJS_MIN_COMPRESSION', 'min');
+define('EXTJS_DEV_COMPRESSION', 'dev');
+define('EXTJS_DEBUG_COMPRESSION', 'debug');
+define('EXTJS_DEBUG_COMMENTS_COMPRESSION', 'debug-w-comments');
+define('EXTJS_THEME_NEPTUNE', 'neptune');
+
+/**
+ * Implements hook_menu().
+ */
+function extjs_menu() {
+  return  array(
+    'admin/settings/extjs' => array(
+      'title' => t('Sencha ExtJS Settings'),
+      'description' => t('Sencha ExtJS Settings.'),
+      'file' => 'extjs.admin.inc',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('extjs_admin_settings_form', 3),
+      'access arguments' => array('administer site configuration'),
+      'type' => MENU_NORMAL_ITEM,
+    )
+  );
+}

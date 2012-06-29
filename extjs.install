@@ -1,0 +1,42 @@
+<?php
+
+/**
+ * @file
+ *
+ * The install hooks for this module.
+ */
+
+/**
+ * Implementation of hook_requirements().
+ */
+function extjs_requirements($phase) {
+  include_once dirname(__FILE__) . '/extjs.utils.inc'; // module_load_include() isn't avaliable during the 'install' $phase
+  $t = get_t();
+  $requirements = array(
+    'extjs' => array('title' => $t('Sencha ExtJS Library'))
+  );
+  $version = extjs_get_version();
+  if ($version !== FALSE && version_compare($version, '4.0.0') >= 0) {
+    $requirements['extjs']['severity'] = REQUIREMENT_OK;
+    $requirements['extjs']['value'] = $version;
+  }
+  else {
+    $requirements['extjs']['severity'] = REQUIREMENT_ERROR;
+    $requirements['extjs']['value'] = $t('Not found');
+    $requirements['extjs']['description'] = $t('The <a href="@extjs">Sencha ExtJS Library</a> plugin is missing. <a href="@download">Download</a> and extract it into the <code>@directory</code> directory. Rename the extracted folder to <code>@library-folder</code>.', array(
+      '@extjs' => 'http://www.sencha.com/',
+      '@download' => 'http://www.sencha.com/products/extjs/download?page=a',
+      '@directory' => 'sites/all/libraries',
+      '@library-folder' => 'extjs')
+    );
+  }
+  return $requirements;
+}
+
+/**
+ * Implementation of hook_install().
+ */
+function extjs_install() {
+  // Set the module's weight high so that it runs after other modules.
+  db_query("UPDATE {system} SET weight = 99 WHERE name = 'extjs' and type = 'module'");
+}
