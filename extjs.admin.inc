@@ -22,7 +22,7 @@ function extjs_admin_settings_form(array &$form_state) {
     '#title' => t('Choose ExtJS compression level'),
     '#options' => array(
       EXTJS_MIN_COMPRESSION => t('Production (Minified)'),
-      EXTJS_DEV_COMPRESSION => t('Development'),
+      EXTJS_DEV_COMPRESSION => t('Development (Raw)'),
       EXTJS_DEBUG_COMPRESSION => t('Development (Debug)'),
       EXTJS_DEBUG_COMMENTS_COMPRESSION => t('Development (Debug with Comments)'),
     ),

@@ -10,7 +10,7 @@
  * Returns the path to the ExtJS library.
  *
  * @return string
- *  The path to the EXTJS library if found, FALSE otherwise.
+ *  The path to the ExtJS library if found, FALSE otherwise.
  */
 function extjs_get_path() {
   static $path;
@@ -28,6 +28,36 @@ function extjs_get_path() {
     $path = 'sites/all/libraries/extjs';
   }
   return $path;
+}
+
+/**
+ * Returns the path to the ExtJS library's resource folder where all the css/image/theme data is kept.
+ *
+ * @return string
+ *  The path to the ExtJS library's resouce folder if found, FALSE otherwise.
+ */
+function extjs_get_resources_path() {
+  return extjs_get_path() . '/resources';
+}
+
+/**
+ * Returns the path to the ExtJS library's core css folder.
+ *
+ * @return string
+ *  The path to the ExtJS library's css folder if found, FALSE otherwise.
+ */
+function extjs_get_css_path() {
+  return extjs_get_resources_path() . '/css';
+}
+
+/**
+ * Returns the path to the ExtJS library's core js folder.
+ *
+ * @return string
+ *  The path to the ExtJS library's js folder if found, FALSE otherwise.
+ */
+function extjs_get_js_path() {
+  return extjs_get_path();
 }
 
 /**
@@ -52,4 +82,54 @@ function extjs_get_version() {
     }
   }
   return $version;
+}
+
+/**
+ * Gets the suffix for the file depending on the compression settings.
+ *
+ * @return string
+ *   The suffix of the file, denoting its compression type.
+ */
+function extjs_get_js_file_suffix() {
+  $suffix = array(
+    EXTJS_MIN_COMPRESSION => '.js',
+    EXTJS_DEV_COMPRESSION => '-dev.js',
+    EXTJS_DEBUG_COMPRESSION => '-debug.js',
+    EXTJS_DEBUG_COMMENTS_COMPRESSION => '-debug-w-comments.js'
+  );
+  $compression_type = variable_get('extjs_compression_type', EXTJS_MIN_COMPRESSION);
+  return $suffix[$compression_type];
+}
+
+/**
+ * Gets the suffix for the file depending on the compression settings.
+ *
+ * @return string
+ *   The suffix of the file, denoting its compression type.
+ */
+function extjs_get_css_file_suffix() {
+  $suffix = array(
+    EXTJS_MIN_COMPRESSION => '.css',
+    EXTJS_DEV_COMPRESSION => '-debug.css',
+    EXTJS_DEBUG_COMPRESSION => '-debug.css',
+    EXTJS_DEBUG_COMMENTS_COMPRESSION => '-debug.css'
+  );
+  $compression_type = variable_get('extjs_compression_type', EXTJS_MIN_COMPRESSION);
+  return $suffix[$compression_type];
+}
+
+/**
+ * Includes the given extjs css file.
+ */
+function extjs_add_css_file($file) {
+  $path = extjs_get_css_path();
+  drupal_add_css($path . '/' . $file . extjs_get_css_file_suffix(), 'theme', 'all');
+}
+
+/**
+ * Includes the given extjs js file.
+ */
+function extjs_add_js_file($file) {
+  $path = extjs_get_js_path();
+  drupal_add_js($path . '/' . $file . extjs_get_js_file_suffix());
 }

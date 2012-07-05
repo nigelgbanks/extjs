@@ -27,3 +27,60 @@ function extjs_menu() {
     )
   );
 }
+
+/**
+ * Adds a single javascript file that will take advantage of ExtJS ability to asynchronously load the javascript files it requires.
+ * Typically this is all that you require.
+ *
+ * This shouldn't be used in conjunction with ext_add_all().
+ */
+function extjs_add_seed() {
+  module_load_include('inc', 'extjs', 'extjs.utils');
+  extjs_add_css_file('ext-all');
+  extjs_add_js_file('ext'); // @todo: look into the theme layer more.
+}
+
+/**
+ * Adds the ext-all js so that no other javascript is need or loaded dynamically.
+ *
+ * This shouldn't be used in conjuntion with extjs_add_seed().
+ */
+function extjs_add_all() {
+  module_load_include('inc', 'extjs', 'extjs.utils');
+  extjs_add_css_file('ext-all');
+  extjs_add_js_file('ext-all');
+}
+
+/**
+ * Fetchs and processes the applications definition.
+ */
+function extjs_get_app($app_id) {
+  $args = func_get_args();
+  $app = call_user_func_array($app_id, $args);
+  $app['__drupal_alter_by_ref'] = array(&$args);
+  drupal_alter('extjs_app_' . $app_id, $app);
+  extjs_process_app($app_id, $app);
+  // Render to a div or to an iframe? choose at a later time.
+}
+
+/**
+ * Generates the JSON definition for the application.
+ */
+function extjs_process_app($app_id, $app) {
+  $definition = array(
+    'id' => $app_id
+  );
+  $json = array(
+    'extjs' => array(
+      'applications' => array(
+        $app_id => $definition
+      )
+    )
+  );
+  drupal_add_js($json, 'settings');
+}
+
+
+/*
+  Basically we need to take an array definition of a ExtJS application transform it into a JSON object and dynamically create it client side.
+*/
