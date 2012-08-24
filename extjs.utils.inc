@@ -98,7 +98,8 @@ function extjs_get_version() {
  *   which version of extjs is required and where it can be downloaded.
  */
 function extjs_get_version_requirement_status_message($module, $version) {
-  return t('The module "@module" requires !extjs version @version or higher. !download and extract it into the !directory directory. Rename the extracted folder to !name.',
+  $t = get_t();
+  return $t('The module "@module" requires !extjs version @version or higher. !download and extract it into the !directory directory. Rename the extracted folder to !name.',
     array(
       '@module' => $module,
       '@version' => $version,
