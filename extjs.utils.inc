@@ -131,7 +131,7 @@ function extjs_get_version_requirement_status_message($module, $version) {
       '@module' => $module,
       '@version' => $version,
       '!extjs' => '<a href="http://www.sencha.com/">Ext JS</a>',
-      '!download' => '<a href="http://www.sencha.com/products/extjs/download?page=a">' . t('Download') . '</a>'
+      '!download' => '<a href="http://www.sencha.com/products/extjs/download?page=a">' . t('Download') . '</a>',
       '!directory' => '<code>sites/all/libraries</code>',
       '!name' => '<code>extjs</code>'
     )
