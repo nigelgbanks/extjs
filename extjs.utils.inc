@@ -85,6 +85,31 @@ function extjs_get_version() {
 }
 
 /**
+ * Returns the 'de facto' description message that can be used by modules that require
+ * a specific version of extjs.
+ *
+ * @param string $module
+ *   The name of the module with the requirement.
+ * @param string $version
+ *   The version the module requries.
+ *
+ * @return string
+ *   A translated description message that can be used in the status page to describe
+ *   which version of extjs is required and where it can be downloaded.
+ */
+function extjs_get_version_requirement_status_message($module, $version) {
+  return t('The module "@module" requires !extjs version @version or higher. !download and extract it into the !directory directory. Rename the extracted folder to !name.',
+    array(
+      '@module' => $module,
+      '@version' => $version,
+      '!extjs' => '<a href="http://www.sencha.com/">Ext JS</a>',
+      '!download' => '<a href="http://www.sencha.com/products/extjs/download?page=a">' . t('Download') . '</a>'
+      '!directory' => '<code>sites/all/libraries</code>',
+      '!name' => '<code>extjs</code>'
+    ));
+}
+
+/**
  * Gets the suffix for the file depending on the compression settings.
  *
  * @return string
