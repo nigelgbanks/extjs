@@ -84,6 +84,33 @@ function extjs_get_version() {
   return $version;
 }
 
+
+/**
+ * Generates a version requirement for the extjs library for use in the hook_requirements() function.
+ * This should be used by modules that require the extjs library to have a specific version higher than 4.0
+ *
+ * @param string $module
+ *   The name of the module with the requirement.
+ * @param string $version
+ *   The version the module requries.
+ *
+ * @return array
+ *   A requirement definition for use in the hook_requirements() function. It should be added to the $requirements array with a unique key.
+ */
+function extjs_get_version_requirement($module_name,  $required_version) {
+  $t = get_t();
+  $requirement = array('title' => $t('Ext JS Library'));
+  $requirement['value'] = $version = extjs_get_version();
+  if (version_compare($version, $required_version) >= 0) {
+    $requirement['severity'] = REQUIREMENT_OK;
+  }
+  else {
+    $requirement['severity'] = REQUIREMENT_ERROR;
+    $requirement['description'] = extjs_get_version_requirement_status_message($module_name, $required_version);
+  }
+  return $requirement;
+}
+
 /**
  * Returns the 'de facto' description message that can be used by modules that require
  * a specific version of extjs.
