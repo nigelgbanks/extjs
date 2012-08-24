@@ -107,7 +107,8 @@ function extjs_get_version_requirement_status_message($module, $version) {
       '!download' => '<a href="http://www.sencha.com/products/extjs/download?page=a">' . t('Download') . '</a>'
       '!directory' => '<code>sites/all/libraries</code>',
       '!name' => '<code>extjs</code>'
-    ));
+    )
+  );
 }
 
 /**
