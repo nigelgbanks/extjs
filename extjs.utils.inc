@@ -194,9 +194,9 @@ function extjs_add_js_file($file) {
  */
 function extjs_add_drupal_reset_css_files() {
  $css_path = drupal_get_path('module', 'extjs') . '/css';
- drupal_add_css("$css_path/system.css", 'theme', 'all'); // Fix the Drupal system.css problems. @TODO build theme system for extjs.
- drupal_add_css("$css_path/defaultss.css", 'theme', 'all'); // Fix the Drupal system.css problems. @TODO build theme system for extjs.
+ drupal_add_css("$css_path/reset-system.css", 'theme', 'all'); // Fix the Drupal system.css problems. @TODO build theme system for extjs.
+ drupal_add_css("$css_path/reset-defaults.css", 'theme', 'all'); // Fix the Drupal system.css problems. @TODO build theme system for extjs.
  if(variable_get('theme_default', NULL) == 'garland') {
-    drupal_add_css("$css_path/style.css", 'theme', 'all'); // Fix the Garland theme style.css problems. @TODO build theme system for extjs.
+    drupal_add_css("$css_path/reset-garland-style.css", 'theme', 'all'); // Fix the Garland theme style.css problems. @TODO build theme system for extjs.
   }
 }

@@ -1,0 +1,14 @@
+/**
+ * @file
+ *
+ * Override styles that the Drupal defaults.css applies to tags that break Ext JS.
+ */
+fieldset.x-fieldset {
+  margin: 0;
+  padding: 0;
+}
+table.x-field th, table.x-grid-table th {
+  text-align: left; /* LTR */
+  padding: 0; /* LTR */
+  border-bottom: none;
+}
