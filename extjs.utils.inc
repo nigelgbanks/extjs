@@ -187,3 +187,16 @@ function extjs_add_js_file($file) {
   $path = extjs_get_js_path();
   drupal_add_js($path . '/' . $file . extjs_get_js_file_suffix());
 }
+
+/**
+ * Includes several css files that are used to remove css styles applied to tag without any class qualifiers.
+ * Currently this only corrects for the Drupal system module and the Garland theme, custom themes are expected to scope their styles.
+ */
+function extjs_add_drupal_reset_css_files() {
+ $css_path = drupal_get_path('module', 'extjs') . '/css';
+ drupal_add_css("$css_path/system.css", 'theme', 'all'); // Fix the Drupal system.css problems. @TODO build theme system for extjs.
+ drupal_add_css("$css_path/defaultss.css", 'theme', 'all'); // Fix the Drupal system.css problems. @TODO build theme system for extjs.
+ if(variable_get('theme_default', NULL) == 'garland') {
+    drupal_add_css("$css_path/style.css", 'theme', 'all'); // Fix the Garland theme style.css problems. @TODO build theme system for extjs.
+  }
+}

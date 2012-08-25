@@ -36,9 +36,8 @@ function extjs_menu() {
  */
 function extjs_add_seed() {
   module_load_include('inc', 'extjs', 'extjs.utils');
-  drupal_add_css(drupal_get_path('module', 'extjs') . '/css/system.css', 'theme', 'all'); // Fix the Drupal system.css problems. @TODO build theme system for extjs.
-  drupal_add_css(drupal_get_path('module', 'extjs') . '/css/defaults.css', 'theme', 'all'); // Fix the Drupal system.css problems. @TODO build theme system for extjs.
-  extjs_add_css_file('ext-all');
+  extjs_add_drupal_reset_css_files();
+  extjs_add_css_file('ext-all-scoped');
   extjs_add_js_file('ext'); // @todo: look into the theme layer more.
 }
 
@@ -49,9 +48,8 @@ function extjs_add_seed() {
  */
 function extjs_add_all() {
   module_load_include('inc', 'extjs', 'extjs.utils');
-  drupal_add_css(drupal_get_path('module', 'extjs') . '/css/system.css', 'theme', 'all'); // Fix the Drupal system.css problems. @TODO build theme system for extjs.
-  drupal_add_css(drupal_get_path('module', 'extjs') . '/css/defaults.css', 'theme', 'all'); // Fix the Drupal system.css problems. @TODO build theme system for extjs.
-  extjs_add_css_file('ext-all');
+  extjs_add_drupal_reset_css_files();
+  extjs_add_css_file('ext-all-scoped');
   extjs_add_js_file('ext-all');
 }
 

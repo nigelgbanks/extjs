@@ -3,13 +3,13 @@
  *
  * Override styles that the Drupal system.css applies to tags that break Ext JS.
  */
-tbody {
+table.x-field > tbody {
   border-top: none;
 }
-tbody th {
+table.x-field > tbody > th {
   border-bottom: none;
 }
-thead th {
+table.x-field > thead > th {
   text-align: left; /* LTR */
   padding: 0; /* LTR */
   border-top: none;

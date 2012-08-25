@@ -1,0 +1,12 @@
+/**
+ * @file
+ *
+ * Override the styles that the Theme Garland style.css applies to tags that break Ext JS.
+ */
+fieldset.x-fieldset {
+  background: none;
+}
+table.x-grid-table, table.x-field {
+  margin: 0;
+  width: auto;
+}
