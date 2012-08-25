@@ -1,0 +1,16 @@
+/**
+ * @file
+ *
+ * Override styles that the Drupal system.css applies to tags that break Ext JS.
+ */
+tbody {
+  border-top: none;
+}
+tbody th {
+  border-bottom: none;
+}
+thead th {
+  text-align: left; /* LTR */
+  padding: 0; /* LTR */
+  border-top: none;
+}
