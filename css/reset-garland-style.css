@@ -6,7 +6,10 @@
 fieldset.x-fieldset {
   background: none;
 }
-table.x-grid-table, table.x-field {
+table.x-grid-table, table.x-field, table.x-form-trigger-wrap {
   margin: 0;
   width: auto;
+}
+ul li.x-boundlist-item {
+  background: none;
 }
