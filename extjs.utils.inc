@@ -185,7 +185,25 @@ function extjs_add_css_file($file) {
  */
 function extjs_add_js_file($file) {
   $path = extjs_get_js_path();
-  drupal_add_js($path . '/' . $file . extjs_get_js_file_suffix());
+  drupal_add_js($path . '/' . $file . extjs_get_js_file_suffix(), 'module', 'header', TRUE);
+}
+
+
+/**
+ * not safe yet, the theme layer must be spec'd out.
+ */
+function extjs_add_default_settings($settings = NULL) {
+  drupal_add_js(array(
+      'extjs' => array(
+        'buildSettings' => array(
+          'scopeResetCSS' => TRUE))), 'setting');
+}
+
+/**
+ * not safe yet, the theme layer must be spec'd out.
+ */
+function extjs_add_settings_js_file() {
+  drupal_add_js(drupal_get_path('module', 'extjs') . '/js/extjs-settings.js', 'module', 'header', TRUE);
 }
 
 /**

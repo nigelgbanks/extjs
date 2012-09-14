@@ -54,6 +54,24 @@ function extjs_add_all() {
 }
 
 /**
+ * Subject to change in the future... be wary your code may have to change with this
+ * as the theme layer get's spec'd out.
+ */
+function extjs_load_app(array $css, array $js, $all = TRUE){
+  module_load_include('inc', 'extjs', 'extjs.utils');
+  extjs_add_drupal_reset_css_files();
+  foreach($css as $file) {
+    drupal_add_css($file);
+  }
+  extjs_add_default_settings();
+  extjs_add_settings_js_file();
+  $all ? extjs_add_js_file('ext-all') : extjs_add_js_file('ext');
+  foreach($js as $file) {
+    drupal_add_js($file, 'module', 'header', TRUE);
+  }
+}
+
+/**
  * Fetchs and processes the applications definition.
  */
 function extjs_get_app($app_id) {
