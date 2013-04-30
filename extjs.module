@@ -2,71 +2,75 @@
 
 /**
  * @file
- *
  * A Drupal wrapper for the Sencha ExtJS Library
  */
+
 define('EXTJS_MIN_COMPRESSION', 'min');
 define('EXTJS_DEV_COMPRESSION', 'dev');
 define('EXTJS_DEBUG_COMPRESSION', 'debug');
 define('EXTJS_DEBUG_COMMENTS_COMPRESSION', 'debug-w-comments');
 define('EXTJS_THEME_NEPTUNE', 'neptune');
+define('EXTJS_MIN_VERSION', '4.2.0');
 
 /**
  * Implements hook_menu().
  */
 function extjs_menu() {
-  return  array(
+  return array(
     'admin/settings/extjs' => array(
-      'title' => t('Sencha ExtJS Settings'),
-      'description' => t('Sencha ExtJS Settings.'),
-      'file' => 'extjs.admin.inc',
+      'title' => 'Sencha ExtJS Settings',
+      'description' => 'Sencha ExtJS Settings.',
+      'file' => 'includes/admin.inc',
       'page callback' => 'drupal_get_form',
       'page arguments' => array('extjs_admin_settings_form', 3),
       'access arguments' => array('administer site configuration'),
       'type' => MENU_NORMAL_ITEM,
-    )
+    ),
   );
 }
 
 /**
- * Adds a single javascript file that will take advantage of ExtJS ability to asynchronously load the javascript files it requires.
+ * Loads ExtJS asynchronously.
+ *
+ * Adds a single javascript file that will take advantage of ExtJS ability to
+ * asynchronously load the javascript files it requires.
+ *
  * Typically this is all that you require.
  *
  * This shouldn't be used in conjunction with ext_add_all().
  */
 function extjs_add_seed() {
-  module_load_include('inc', 'extjs', 'extjs.utils');
+  require_once './includes/utilities.inc';
   extjs_add_drupal_reset_css_files();
   extjs_add_css_file('ext-all-scoped');
-  extjs_add_js_file('ext'); // @todo: look into the theme layer more.
+  extjs_add_js_file('ext');
 }
 
 /**
- * Adds the ext-all js so that no other javascript is need or loaded dynamically.
+ * Adds the ext-all so that no other javascript is need or loaded dynamically.
  *
  * This shouldn't be used in conjuntion with extjs_add_seed().
  */
 function extjs_add_all() {
-  module_load_include('inc', 'extjs', 'extjs.utils');
+  require_once './includes/utilities.inc';
   extjs_add_drupal_reset_css_files();
   extjs_add_css_file('ext-all-scoped');
   extjs_add_js_file('ext-all');
 }
 
 /**
- * Subject to change in the future... be wary your code may have to change with this
- * as the theme layer get's spec'd out.
+ * Load App.
  */
-function extjs_load_app(array $css, array $js, $all = TRUE){
-  module_load_include('inc', 'extjs', 'extjs.utils');
+function extjs_load_app(array $css, array $js, $all = TRUE) {
+  require_once './includes/utilities.inc';
   extjs_add_drupal_reset_css_files();
-  foreach($css as $file) {
+  foreach ($css as $file) {
     drupal_add_css($file);
   }
   extjs_add_default_settings();
   extjs_add_settings_js_file();
   $all ? extjs_add_js_file('ext-all') : extjs_add_js_file('ext');
-  foreach($js as $file) {
+  foreach ($js as $file) {
     drupal_add_js($file, 'module', 'header', TRUE);
   }
 }
@@ -88,19 +92,14 @@ function extjs_get_app($app_id) {
  */
 function extjs_process_app($app_id, $app) {
   $definition = array(
-    'id' => $app_id
+    'id' => $app_id,
   );
   $json = array(
     'extjs' => array(
       'applications' => array(
-        $app_id => $definition
-      )
-    )
+        $app_id => $definition,
+      ),
+    ),
   );
   drupal_add_js($json, 'settings');
 }
-
-
-/*
-  Basically we need to take an array definition of a ExtJS application transform it into a JSON object and dynamically create it client side.
-*/
