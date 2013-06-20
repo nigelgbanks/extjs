@@ -2,7 +2,6 @@
 
 /**
  * @file
- *
  * A collection of helper/utility functions for this module.
  */
 
@@ -10,31 +9,27 @@
  * Returns the path to the ExtJS library.
  *
  * @return string
- *  The path to the ExtJS library if found, FALSE otherwise.
+ *   The path to the ExtJS library if found, FALSE otherwise.
  */
 function extjs_get_path() {
   static $path;
   if (isset($path)) {
     return $path;
   }
-  $path = FALSE;
-  if (function_exists('libraries_get_path')) { // Libraries API integration.
-    $path = libraries_get_path('extjs');
-    if ($path !== FALSE && !file_exists($path)) {  // Libraries API 1.x returns a default path; 2.x returns FALSE.
-      $path = FALSE;
-    }
-  }
-  else if (file_exists('./sites/all/libraries/extjs')) {   // Manually check sites/all/libraries in case Libraries API is not available.
-    $path = 'sites/all/libraries/extjs';
+  $path = libraries_get_path('extjs');
+  if ($path !== FALSE && !file_exists($path)) {
+    $path = FALSE;
   }
   return $path;
 }
 
 /**
- * Returns the path to the ExtJS library's resource folder where all the css/image/theme data is kept.
+ * Returns the path to the ExtJS library's resource folder.
+ *
+ * All the css/image/theme data is kept in the resource folder.
  *
  * @return string
- *  The path to the ExtJS library's resouce folder if found, FALSE otherwise.
+ *   The path to the ExtJS library's resouce folder if found, FALSE otherwise.
  */
 function extjs_get_resources_path() {
   return extjs_get_path() . '/resources';
@@ -44,7 +39,7 @@ function extjs_get_resources_path() {
  * Returns the path to the ExtJS library's core css folder.
  *
  * @return string
- *  The path to the ExtJS library's css folder if found, FALSE otherwise.
+ *   The path to the ExtJS library's css folder if found, FALSE otherwise.
  */
 function extjs_get_css_path() {
   return extjs_get_resources_path() . '/css';
@@ -54,30 +49,31 @@ function extjs_get_css_path() {
  * Returns the path to the ExtJS library's core js folder.
  *
  * @return string
- *  The path to the ExtJS library's js folder if found, FALSE otherwise.
+ *   The path to the ExtJS library's js folder if found, FALSE otherwise.
  */
 function extjs_get_js_path() {
   return extjs_get_path();
 }
 
 /**
- * Gets the installed version of ExtJS
+ * Gets the installed version of ExtJS.
  *
  * @return string
- *  The currently installed version, if found FALSE otherwise.
+ *   The currently installed version, if found FALSE otherwise.
  */
 function extjs_get_version() {
   static $version;
-  if(isset($version)) {
+  if (isset($version)) {
     return $version;
   }
   $version = FALSE;
   $filename = extjs_get_path() . '/ext.js';
-  if(file_exists($filename)) {
+  if (file_exists($filename)) {
     $text = file_get_contents($filename);
     $matches = array();
     preg_match('/setVersion\(\"extjs\",\"([^.]*\.[^.]*\.[^.]*)\"\)/', $text, $matches);
-    if(isset($matches[1])) { // The first sub expression.
+    // The first sub expression.
+    if (isset($matches[1])) {
       $version = $matches[1];
     }
   }
@@ -86,18 +82,21 @@ function extjs_get_version() {
 
 
 /**
- * Generates a version requirement for the extjs library for use in the hook_requirements() function.
- * This should be used by modules that require the extjs library to have a specific version higher than 4.0
+ * Generates a version requirement for the extjs library.
  *
- * @param string $module
+ * For use in the hook_requirements() function. This should be used by modules
+ * that require the extjs library to have a specific version higher than 4.0.
+ *
+ * @param string $module_name
  *   The name of the module with the requirement.
- * @param string $version
+ * @param string $required_version
  *   The version the module requries.
  *
  * @return array
- *   A requirement definition for use in the hook_requirements() function. It should be added to the $requirements array with a unique key.
+ *   A requirement definition for use in the hook_requirements() function.
+ *   It should be added to the $requirements array with a unique key.
  */
-function extjs_get_version_requirement($module_name,  $required_version) {
+function extjs_get_version_requirement($module_name, $required_version) {
   $t = get_t();
   $requirement = array('title' => $t('Ext JS Library'));
   $requirement['value'] = $version = extjs_get_version();
@@ -112,8 +111,9 @@ function extjs_get_version_requirement($module_name,  $required_version) {
 }
 
 /**
- * Returns the 'de facto' description message that can be used by modules that require
- * a specific version of extjs.
+ * Returns the 'de facto' required description message.
+ *
+ * This can be used by modules that require a specific version of Ext JS.
  *
  * @param string $module
  *   The name of the module with the requirement.
@@ -121,8 +121,8 @@ function extjs_get_version_requirement($module_name,  $required_version) {
  *   The version the module requries.
  *
  * @return string
- *   A translated description message that can be used in the status page to describe
- *   which version of extjs is required and where it can be downloaded.
+ *   A translated description message that can be used in the status page to
+ *   describe which version of extjs is required and where it can be downloaded.
  */
 function extjs_get_version_requirement_status_message($module, $version) {
   $t = get_t();
@@ -133,7 +133,7 @@ function extjs_get_version_requirement_status_message($module, $version) {
       '!extjs' => '<a href="http://www.sencha.com/">Ext JS</a>',
       '!download' => '<a href="http://www.sencha.com/products/extjs/download?page=a">' . t('Download') . '</a>',
       '!directory' => '<code>sites/all/libraries</code>',
-      '!name' => '<code>extjs</code>'
+      '!name' => '<code>extjs</code>',
     )
   );
 }
@@ -149,7 +149,7 @@ function extjs_get_js_file_suffix() {
     EXTJS_MIN_COMPRESSION => '.js',
     EXTJS_DEV_COMPRESSION => '-dev.js',
     EXTJS_DEBUG_COMPRESSION => '-debug.js',
-    EXTJS_DEBUG_COMMENTS_COMPRESSION => '-debug-w-comments.js'
+    EXTJS_DEBUG_COMMENTS_COMPRESSION => '-debug-w-comments.js',
   );
   $compression_type = variable_get('extjs_compression_type', EXTJS_MIN_COMPRESSION);
   return $suffix[$compression_type];
@@ -166,7 +166,7 @@ function extjs_get_css_file_suffix() {
     EXTJS_MIN_COMPRESSION => '.css',
     EXTJS_DEV_COMPRESSION => '-debug.css',
     EXTJS_DEBUG_COMPRESSION => '-debug.css',
-    EXTJS_DEBUG_COMMENTS_COMPRESSION => '-debug.css'
+    EXTJS_DEBUG_COMMENTS_COMPRESSION => '-debug.css',
   );
   $compression_type = variable_get('extjs_compression_type', EXTJS_MIN_COMPRESSION);
   return $suffix[$compression_type];
@@ -188,9 +188,8 @@ function extjs_add_js_file($file) {
   drupal_add_js($path . '/' . $file . extjs_get_js_file_suffix(), 'module', 'header', TRUE);
 }
 
-
 /**
- * not safe yet, the theme layer must be spec'd out.
+ * Not safe yet, the theme layer must be spec'd out.
  */
 function extjs_add_default_settings($settings = NULL) {
   drupal_add_js(array(
@@ -200,21 +199,26 @@ function extjs_add_default_settings($settings = NULL) {
 }
 
 /**
- * not safe yet, the theme layer must be spec'd out.
+ * Not safe yet, the theme layer must be spec'd out.
  */
 function extjs_add_settings_js_file() {
   drupal_add_js(drupal_get_path('module', 'extjs') . '/js/extjs-settings.js', 'module', 'header', TRUE);
 }
 
 /**
- * Includes several css files that are used to remove css styles applied to tag without any class qualifiers.
- * Currently this only corrects for the Drupal system module and the Garland theme, custom themes are expected to scope their styles.
+ * Includes several css files that are used to reset the style.
+ *
+ * Remove css styles applied to tag without any class qualifiers.
+ * Currently this only corrects for the Drupal system module and the
+ * Garland theme, custom themes are expected to scope their styles.
  */
 function extjs_add_drupal_reset_css_files() {
- $css_path = drupal_get_path('module', 'extjs') . '/css';
- drupal_add_css("$css_path/reset-system.css", 'theme', 'all'); // Fix the Drupal system.css problems. @TODO build theme system for extjs.
- drupal_add_css("$css_path/reset-defaults.css", 'theme', 'all'); // Fix the Drupal system.css problems. @TODO build theme system for extjs.
- if(variable_get('theme_default', NULL) == 'garland') {
-    drupal_add_css("$css_path/reset-garland-style.css", 'theme', 'all'); // Fix the Garland theme style.css problems. @TODO build theme system for extjs.
+  $css_path = drupal_get_path('module', 'extjs') . '/css';
+  // Fix the Drupal system.css problems. @TODO build theme system for extjs.
+  drupal_add_css("$css_path/reset-system.css", 'theme', 'all');
+  drupal_add_css("$css_path/reset-defaults.css", 'theme', 'all');
+  if (variable_get('theme_default', NULL) == 'garland') {
+    // Fix the Garland theme style.css problems.
+    drupal_add_css("$css_path/reset-garland-style.css", 'theme', 'all');
   }
 }

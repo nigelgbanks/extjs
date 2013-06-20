@@ -1,4 +1,5 @@
-name = ExtJS Library
-description = Provides the Sencha ExtJS plug-in to other Drupal modules.
-package = User interface
+name = "ExtJS"
+description = "Provides the Sencha ExtJS plug-in to other Drupal modules."
+package = "User interface"
+dependencies[] = libraries
 core = 7.x
