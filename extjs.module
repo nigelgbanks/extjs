@@ -40,7 +40,7 @@ function extjs_menu() {
  * This shouldn't be used in conjunction with ext_add_all().
  */
 function extjs_add_seed() {
-  require_once './includes/utilities.inc';
+  module_load_include('inc', 'extjs', 'includes/utilities');
   extjs_add_drupal_reset_css_files();
   extjs_add_css_file('ext-all-scoped');
   extjs_add_js_file('ext');
@@ -52,7 +52,7 @@ function extjs_add_seed() {
  * This shouldn't be used in conjuntion with extjs_add_seed().
  */
 function extjs_add_all() {
-  require_once './includes/utilities.inc';
+  module_load_include('inc', 'extjs', 'includes/utilities');
   extjs_add_drupal_reset_css_files();
   extjs_add_css_file('ext-all-scoped');
   extjs_add_js_file('ext-all');
@@ -62,7 +62,7 @@ function extjs_add_all() {
  * Load App.
  */
 function extjs_load_app(array $css, array $js, $all = TRUE) {
-  require_once './includes/utilities.inc';
+  module_load_include('inc', 'extjs', 'includes/utilities');
   extjs_add_drupal_reset_css_files();
   foreach ($css as $file) {
     drupal_add_css($file);
