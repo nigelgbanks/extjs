@@ -9,7 +9,7 @@
  * Implements of hook_requirements().
  */
 function extjs_requirements($phase) {
-  require_once './includes/utilities.inc';
+  require_once dirname(__FILE__) . '/includes/utilities.inc';
   $t = get_t();
   $requirements = array(
     'extjs' => array('title' => $t('Sencha ExtJS Library')),

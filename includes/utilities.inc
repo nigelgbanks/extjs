@@ -67,11 +67,11 @@ function extjs_get_version() {
     return $version;
   }
   $version = FALSE;
-  $filename = extjs_get_path() . '/ext.js';
+  $filename = extjs_get_path() . '/version.properties';
   if (file_exists($filename)) {
     $text = file_get_contents($filename);
     $matches = array();
-    preg_match('/setVersion\(\"extjs\",\"([^.]*\.[^.]*\.[^.]*)\"\)/', $text, $matches);
+    preg_match('/version\.full=([^.]*\.[^.]*\.[^.]*)/', $text, $matches);
     // The first sub expression.
     if (isset($matches[1])) {
       $version = $matches[1];
